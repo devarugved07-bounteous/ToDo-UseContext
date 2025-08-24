@@ -1,42 +1,37 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from "react";
+// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    NavLink,
+} from "react-router-dom";
 
-
-import React, { useState } from 'react';
-import './App.css';
-import InputTask from './components/InputTask';
-import CardTask from './components/CardTask';
-import { TodoProvider } from './TodoContext';
-
-type TodoItem = {
-  id: number;
-  task: string;
-};
+import "./App.css";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import { TodoProvider } from "./TodoContext";
 
 function App() {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-  const nextId = React.useRef(1);
+    return (
+        <TodoProvider>
+            <Router>
+                <nav className="nav">
+                    <NavLink to="/" end className="nav-link">
+                        Home
+                    </NavLink>
+                    <NavLink to="/about" className="nav-link">
+                        About
+                    </NavLink>
+                </nav>
 
-  const addTodo = (task: string) => {
-    const newTodo: TodoItem = {
-      id: nextId.current++,
-      task: task.trim(),
-    };
-    setTodos([...todos, newTodo]);
-  };
-
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  return (
-    <>
-      <TodoProvider>
-        <InputTask />
-        <CardTask />
-      </TodoProvider>
-    </>
-  );
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                </Routes>
+            </Router>
+        </TodoProvider>
+    );
 }
 
 export default App;
- 

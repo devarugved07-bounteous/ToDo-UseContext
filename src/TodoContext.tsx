@@ -1,9 +1,5 @@
-import React, { createContext, useContext, useState, useRef, ReactNode } from 'react';
-
-export type TodoItem = {
-  id: number;
-  task: string;
-};
+import React, { createContext, useContext, ReactNode } from 'react';
+import { useTodoManager, TodoItem } from './hooks/useTodoManager';
 
 type TodoContextType = {
   todos: TodoItem[];
@@ -26,20 +22,7 @@ type TodoProviderProps = {
 };
 
 export const TodoProvider = ({ children }: TodoProviderProps) => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-  const nextId = useRef(1);
-
-  const addTodo = (task: string) => {
-    const newTodo: TodoItem = {
-      id: nextId.current++,
-      task: task.trim(),
-    };
-    setTodos((prev) => [...prev, newTodo]);
-  };
-
-  const deleteTodo = (id: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
-  };
+  const { todos, addTodo, deleteTodo } = useTodoManager();
 
   return (
     <TodoContext.Provider value={{ todos, addTodo, deleteTodo }}>
