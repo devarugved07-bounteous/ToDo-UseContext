@@ -92,10 +92,12 @@ body {
   background-color: #cc0000;
 }
 
-.empty-msg{
+.empty-msg {
   color: #51ff00;
   font-size: 5rem;
+  background-color: #000000;
   text-align: center;
+
 }
 
 .nav {
